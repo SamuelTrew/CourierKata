@@ -2,6 +2,11 @@ import java.util.*;
 
 public class Solution {
 
+   private static List<Integer> small = new ArrayList<>();
+   private static List<Integer> medium = new ArrayList<>();
+   private static List<Integer> mixed = new ArrayList<>();
+   private static int discount = 0;
+
    public static void main(String[] args){
       int cost = 0;
       List<String> result = new ArrayList<>();
@@ -33,7 +38,27 @@ public class Solution {
          result.add("Speedy: " + cost + "\n");
       }
 
+      Collections.sort(small);
+      Collections.sort(medium);
+      Collections.sort(large);
+
+      calc_discount();
+
+      result.add("Discount: -" + discount + "\n");
       System.out.println(result + "Total cost: " + (2*cost));
+   }
+
+   private static void calc_discount() {
+      for (int i = 0; i < small.size(); i++) {
+         if (i % 4 == 0) {
+            discount += small.get(i);
+         }
+      }
+      for (int i = 0; i < medium.size(); i++) {
+         if (i % 3 == 0) {
+            discount += medium.get(i);
+         }
+      }
    }
 
    private static int get_weight_value(int weight, Parcel parcel) {
@@ -53,10 +78,13 @@ public class Solution {
    }
 
    private static Parcel get_parcel_value(int parcel) {
+      mixed.add(parcel);
       if (parcel < 10) {
+         small.add(parcel);
          return Parcel.SMALL;
       }
       if (parcel < 50) {
+         medium.add(parcel);
          return Parcel.MEDIUM;
       }
       if (parcel < 100) {
