@@ -40,7 +40,7 @@ public class Solution {
 
       Collections.sort(small);
       Collections.sort(medium);
-      Collections.sort(large);
+      Collections.sort(mixed);
 
       calc_discount();
 
@@ -57,6 +57,11 @@ public class Solution {
       for (int i = 0; i < medium.size(); i++) {
          if (i % 3 == 0) {
             discount += medium.get(i);
+         }
+      }
+      for (int i = 0; i < mixed.size(); i++) {
+         if (i % 5 == 0 && mixed.get(i) >= 50) {
+            discount += mixed.get(i);
          }
       }
    }
