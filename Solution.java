@@ -8,7 +8,13 @@ public class Solution {
       boolean speedy = Boolean.parseBoolean(args[0]);
 
       for (int i = 1; i < args.length; i++) {
-         int value =  get_parcel_value(Integer.parseInt(args[i])).getParcel();
+         int dimension = Integer.parseInt(args[i]);
+         Parcel parcel = get_parcel_value(dimension);
+         int value =  parcel.getParcel();
+
+         int weight = Integer.parseInt(args[i+1]);
+         int weight_value = get_weight_value(weight, parcel);
+         value += weight_value;
          cost += value;
 
          result.add(args[i] + ": " + value + "\n");
@@ -18,6 +24,20 @@ public class Solution {
       }
 
       System.out.println(result + "Total cost: " + (2*cost));
+   }
+
+   private static int get_weight_value(int weight, Parcel parcel) {
+      switch(parcel) {
+         case SMALL:
+            return (weight - 1) * 2;
+         case MEDIUM:
+            return (weight - 3) * 2;
+         case LARGE:
+            return (weight - 6) * 2;
+         case XL:
+            return (weight - 10) * 2;
+      }
+      return 0;
    }
 
    private static Parcel get_parcel_value(int parcel) {
