@@ -5,15 +5,19 @@ public class Solution {
    public static void main(String[] args){
       int cost = 0;
       List<String> result = new ArrayList<>();
+      boolean speedy = Boolean.parseBoolean(args[0]);
 
-      for (int i = 0; i < args.length; i++) {
+      for (int i = 1; i < args.length; i++) {
          int value =  get_parcel_value(Integer.parseInt(args[i])).getParcel();
          cost += value;
 
          result.add(args[i] + ": " + value + "\n");
       }
+      if (speedy) {
+         result.add("Speedy: " + cost + "\n");
+      }
 
-      System.out.println(result + "Total cost: " + cost);
+      System.out.println(result + "Total cost: " + (2*cost));
    }
 
    private static Parcel get_parcel_value(int parcel) {
