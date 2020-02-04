@@ -7,13 +7,23 @@ public class Solution {
       List<String> result = new ArrayList<>();
       boolean speedy = Boolean.parseBoolean(args[0]);
 
-      for (int i = 1; i < args.length; i++) {
-         int dimension = Integer.parseInt(args[i]);
-         Parcel parcel = get_parcel_value(dimension);
+      for (int i = 1; i < args.length; i+=2) {
+         int dimension = 0;
+         Parcel parcel = Parcel.DEFAULT;
+         if (args[i] == "heavy") {
+            parcel = Parcel.HEAVY;
+         } else {
+            dimension = Integer.parseInt(args[i]);
+            parcel = get_parcel_value(dimension);
+         }
          int value =  parcel.getParcel();
 
          int weight = Integer.parseInt(args[i+1]);
          int weight_value = get_weight_value(weight, parcel);
+         if (weight_value < 0) {
+            weight_value = 0;
+         }
+
          value += weight_value;
          cost += value;
 
@@ -36,6 +46,8 @@ public class Solution {
             return (weight - 6) * 2;
          case XL:
             return (weight - 10) * 2;
+         case HEAVY:
+            return (weight - 50);
       }
       return 0;
    }
@@ -59,7 +71,8 @@ enum Parcel {
    SMALL(3),
    MEDIUM(8),
    LARGE(15),
-   XL(25);
+   XL(25),
+   HEAVY(50);
 
    private final int parcelCode;
 
